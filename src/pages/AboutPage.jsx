@@ -148,3 +148,5 @@ function ArchitectureCard({ title, description }) {
 }
 
 export default AboutPage;
+
+// about page
