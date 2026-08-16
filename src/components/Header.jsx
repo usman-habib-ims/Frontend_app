@@ -1,7 +1,7 @@
 import { FaGithub } from "react-icons/fa";
 import { CiStar } from "react-icons/ci";
 
-function Header() {
+function Header({ onAbout }) {
   return (
     <header className="border-b border-gray-200 bg-white">
       <div className="flex h-[72px] items-center justify-between px-8">
@@ -14,12 +14,13 @@ function Header() {
 
         {/* Navigation */}
         <nav className="flex items-center gap-8">
-          <a
-            href="#about"
-            className="text-sm text-gray-900 transition-colors hover:text-blue-600"
+          <button
+            type="button"
+            onClick={onAbout}
+            className="text-sm text-gray-800 transition-colors hover:text-blue-600"
           >
             About
-          </a>
+          </button>
 
           <a
             href="https://github.com/"

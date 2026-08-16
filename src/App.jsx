@@ -1,9 +1,22 @@
+import { useState } from "react";
 import * as Sentry from "@sentry/react";
 
 import "./App.css";
 import SearchPage from "./pages/SearchPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
+  const [currentPage, setCurrentPage] =
+    useState("search");
+
+  const showAboutPage = () => {
+    setCurrentPage("about");
+  };
+
+  const showSearchPage = () => {
+    setCurrentPage("search");
+  };
+
   return (
     <Sentry.ErrorBoundary
       fallback={
@@ -21,7 +34,11 @@ function App() {
         </div>
       }
     >
-      <SearchPage />
+      {currentPage === "about" ? (
+        <AboutPage onBack={showSearchPage} />
+      ) : (
+        <SearchPage onAbout={showAboutPage} />
+      )}
     </Sentry.ErrorBoundary>
   );
 }

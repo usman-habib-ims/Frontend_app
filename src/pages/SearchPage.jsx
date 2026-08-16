@@ -10,7 +10,7 @@ import { reportUnexpectedError } from "../monitoring/errorReporter";
 
 const PAGE_SIZE = 10;
 
-function SearchPage() {
+function SearchPage({ onAbout }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [repositories, setRepositories] = useState([]);
   const [selectedRepository, setSelectedRepository] = useState(null);
@@ -79,7 +79,7 @@ function SearchPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header onAbout={onAbout}/>
 
       {import.meta.env.DEV && (
         <button
