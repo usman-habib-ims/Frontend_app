@@ -6,6 +6,8 @@ import Pagination from "../components/Pagination";
 import Header from "../components/Header";
 import { searchRepositories } from "../config/dependencies";
 
+import { reportUnexpectedError } from "../monitoring/errorReporter";
+
 const PAGE_SIZE = 10;
 
 function SearchPage() {
@@ -47,6 +49,12 @@ function SearchPage() {
         return;
       }
 
+      reportUnexpectedError(error, {
+        operation: "repository-search",
+        query,
+        page,
+      });
+
       setRepositories([]);
       setTotalCount(0);
       setTotalPages(1);
@@ -72,6 +80,26 @@ function SearchPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+
+      {import.meta.env.DEV && (
+        <button
+          type="button"
+          onClick={() => {
+            const testId = Date.now();
+
+            reportUnexpectedError(
+              new Error(`Repo Finder demo error - ${testId}`),
+              {
+                operation: "sentry-demo",
+                testId,
+              },
+            );
+          }}
+          className="m-4 rounded bg-red-600 px-4 py-2 text-white"
+        >
+          Test Sentry
+        </button>
+      )}
 
       <main className="min-h-screen bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 py-8">
